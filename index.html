@@ -6,10 +6,10 @@
 <title>Interactive Map</title>
 <style>
   :root {
-    --color-city: #ff1a1a;      /* bright red = city/nation */
-    --color-monument: #2196F3;  /* blue = monuments */
-    --color-building: #ffd700;  /* yellow = buildings */
-    --color-town: #8b2e2e;      /* darkish red = small towns */
+    --color-city: #ff1a1a;
+    --color-monument: #2196F3;
+    --color-building: #ffd700;
+    --color-town: #8b2e2e;
   }
 
   * { box-sizing: border-box; }
@@ -27,6 +27,17 @@
     margin-bottom: 18px;
   }
 
+    h2 {
+  text-align: center;
+    margin-bottom: 18px;
+    color:#4752c4
+  }
+
+      h3 {
+  text-align: center;
+    margin-bottom: 18px;
+    color:#4752c4
+  }
 
   .controls {
     max-width: 900px;
@@ -57,11 +68,24 @@ border: 1px solid #3a5068;
     position: relative;
   }
 
+  #coordDisplay {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: rgba(0,0,0,0.65);
+  color: #ffffff;
+  font-family: 'Courier New', monospace;
+  font-size: 13px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  z-index: 4;
+  pointer-events: none;
+}
+
   .search-dropdown {
 position: absolute;
     top: 100%;
 left: 0;
-   
     right: 0;
     background: #14283d;
  border: 1px solid #3a5068;
@@ -93,7 +117,6 @@ margin-top: 16px;
   color: #ffffff;
   text-decoration: none;
    font-weight: bold;
-  
   font-size: 14px;
   padding: 10px 16px;
   border-radius: 6px;
@@ -108,16 +131,13 @@ text-align: center;
 .info-panel .contact-text {
  margin-top: 16px;
   font-size: 14px;
-  
   color: #cccccc;
   font-style: italic;
 }
 
   .compass-label {
   position: absolute;
-  
   color: #ffffff;
- 
 font-weight: bold;
   font-size: 18px;
   font-family: Arial, sans-serif;
@@ -160,7 +180,6 @@ cursor: pointer;
     display: inline-block;
   }
 
-  /* Map area */
   .map-container {
     display: flex;
  justify-content: center;
@@ -179,14 +198,12 @@ cursor: pointer;
 
   .map-inner {
     position: relative;
-
     transform-origin: 50% 50%;
     transition: transform 0.5s ease;
   }
 
   .map-inner.dragging {
     transition: none;
-
     cursor: grabbing;
   }
 
@@ -211,7 +228,6 @@ border-radius: 50%;
 
   .marker.hidden-category {
     display: none;
-
   }
 
   .marker::after {
@@ -229,7 +245,6 @@ animation: pulse 2s infinite;
     0%   { transform: scale(1);   opacity: 0.6; }
 70%  { transform: scale(2.4); opacity: 0; }
     100% { transform: scale(2.4); opacity: 0; }
-
   }
 
   .marker .tooltip {
@@ -242,7 +257,6 @@ bottom: 130%;
  background: rgba(0, 0, 0, 0.85);
     color: #fff;
     padding: 4px 8px;
-
   border-radius: 4px;
     font-size: 13px;
 white-space: nowrap;
@@ -255,10 +269,8 @@ white-space: nowrap;
     opacity: 1;
   }
 
-
   .backdrop {
     position: fixed;
-  
     inset: 0;
     background: rgba(0,0,0,0);
 z-index: 5;
@@ -269,13 +281,11 @@ z-index: 5;
 display: block;
   }
 
-
   .info-panel {
     position: fixed;
     top: 0;
  right: -360px;
     width: 320px;
-
   height: 100%;
     background: #14283d;
     border-left: 2px solid #ffffff;
@@ -295,7 +305,6 @@ right: 0;
     align-items: center;
  gap: 6px;
     font-size: 12px;
-
   text-transform: uppercase;
     letter-spacing: 0.5px;
   color: #cccccc;
@@ -305,7 +314,6 @@ right: 0;
   .info-panel .type-badge .swatch {
   width: 10px;
     height: 10px;
-
  border-radius: 50%;
   border: 2px solid white;
     display: inline-block;
@@ -345,7 +353,6 @@ right: 0;
  display: block;
   }
 
-
   .lightbox {
     position: fixed;
     inset: 0;
@@ -377,7 +384,6 @@ max-height: 100%;
     border: none;
   color: #ffffff;
  font-size: 32px;
- 
     cursor: pointer;
     line-height: 1;
     z-index: 51;
@@ -385,18 +391,15 @@ max-height: 100%;
 
   .info-panel .close-btn {
  position: absolute;
-   
     top: 16px;
  right: 16px;
     background: none;
     border: none;
 color: #ffffff;
-  
 font-size: 22px;
     cursor: pointer;
     line-height: 1;
   }
-
 
   @media (max-width: 700px) {
     .info-panel {
@@ -410,7 +413,6 @@ font-size: 22px;
 border-left: none;
       border-top: 2px solid #ffffff;
       border-radius: 12px 12px 0 0;
-    
       transition: bottom 0.4s ease;
     }
 
@@ -424,6 +426,8 @@ border-left: none;
 <body>
 
 <h1>Interactive Map</h1>
+<h2>PS: The coordinates shown at the bottom of the map may be inaccurate.</h2>
+<h3>Made by alphadarkman or @mrcoolstyll</h3>
 
 <div class="controls">
   <div id="searchResults" style="position:relative;">
@@ -440,6 +444,7 @@ border-left: none;
 <div class="compass-label compass-south">S</div>
 <div class="compass-label compass-east">E</div>
 <div class="compass-label compass-west">W</div>
+<div id="coordDisplay">X: --, Z: --</div>
  <div class="map-inner" id="mapInner">
   <img src="map.png" alt="Minecraft Map" draggable="false">
     </div>
@@ -470,14 +475,12 @@ border-left: none;
 </div>
 
 <script>
-
   const CATEGORIES = {
     city:      { label: 'City / Nation', color: 'var(--color-city)' },
     monument:  { label: 'Monument',      color: 'var(--color-monument)' },
     building:  { label: 'Building',      color: 'var(--color-building)' },
     town:      { label: 'Small Town',    color: 'var(--color-town)' }
   };
-
 
   const LOCATIONS = [
     {
@@ -510,7 +513,7 @@ border-left: none;
       description: 'The Cherry Lagoon is located north of the map and south of the mountain range!',
       image: 'cherry-lagoon.jpg'
     },
-        {
+    {
       id: 'asterwyn',
       name: 'Asterwyn',
       type: 'city',
@@ -521,7 +524,7 @@ border-left: none;
       discordInvite: 'https://discord.gg/rDhE23aKpa',
       image: 'asterwyn.jpg'
     },
-        {
+    {
       id: 'tarpon-springs',
       name: 'Tarpon Springs',
       type: 'city',
@@ -533,7 +536,6 @@ border-left: none;
       image: 'tarpon-springs.jpg'
     }
   ];
-
 
   const mapViewport = document.getElementById('mapViewport');
   const mapInner = document.getElementById('mapInner');
@@ -549,12 +551,10 @@ border-left: none;
   let panX = 0, panY = 0;
   let activeCategories = new Set(Object.keys(CATEGORIES));
 
-
   Object.entries(CATEGORIES).forEach(([key, cat]) => {
     const label = document.createElement('label');
     label.innerHTML = `
       <span class="swatch" style="background:${cat.color};"></span>
-      <input type="checkbox" checked style="display:none;" data-type="${key}">
       ${cat.label}
     `;
     label.addEventListener('click', (e) => {
@@ -570,7 +570,6 @@ border-left: none;
     });
     legend.appendChild(label);
   });
-
 
   LOCATIONS.forEach(loc => {
     const marker = document.createElement('div');
@@ -594,7 +593,6 @@ border-left: none;
       marker.classList.toggle('hidden-category', !activeCategories.has(loc.type));
     });
   }
-
 
   function toggleLocation(id) {
     if (activeLocationId === id) {
@@ -628,7 +626,6 @@ border-left: none;
       infoImage.classList.remove('show');
     }
 
-    // <-- NEW: Discord invite / contact info
     const discordBtn = document.getElementById('infoDiscordBtn');
     const contactText = document.getElementById('infoContactText');
 
@@ -644,12 +641,12 @@ border-left: none;
       discordBtn.style.display = 'none';
       contactText.style.display = 'none';
     }
-    // <-- END NEW
 
     infoPanel.classList.add('open');
     backdrop.classList.add('active');
     activeLocationId = id;
   }
+
   function closePanel() {
     infoPanel.classList.remove('open');
     backdrop.classList.remove('active');
@@ -668,9 +665,7 @@ border-left: none;
     mapInner.style.transform = `scale(${currentZoom}) translate(${tx}%, ${ty}%)`;
   }
 
-
   backdrop.addEventListener('click', closePanel);
-
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -678,7 +673,6 @@ border-left: none;
       closePanel();
     }
   });
-
 
   const lightbox = document.getElementById('lightbox');
   const lightboxImage = document.getElementById('lightboxImage');
@@ -702,7 +696,6 @@ border-left: none;
     lightbox.classList.remove('open');
     lightboxOpen = false;
   }
-
 
   let dragging = false;
   let dragStartX = 0, dragStartY = 0;
@@ -737,7 +730,6 @@ border-left: none;
   mapInner.addEventListener('pointerup', endDrag);
   mapInner.addEventListener('pointercancel', endDrag);
 
-
   searchInput.addEventListener('input', () => {
     const q = searchInput.value.trim().toLowerCase();
     searchDropdown.innerHTML = '';
@@ -766,6 +758,27 @@ border-left: none;
     });
 
     searchDropdown.classList.add('show');
+  });
+
+  const MAP_SIZE = 4000;
+  const coordDisplay = document.getElementById('coordDisplay');
+  const mapImg = mapInner.querySelector('img');
+
+  mapViewport.addEventListener('mousemove', (e) => {
+    const rect = mapImg.getBoundingClientRect();
+    const xPct = ((e.clientX - rect.left) / rect.width) * 100;
+    const yPct = ((e.clientY - rect.top) / rect.height) * 100;
+
+    if (xPct < 0 || xPct > 100 || yPct < 0 || yPct > 100) return;
+
+    const blockX = Math.round((xPct / 100) * MAP_SIZE);
+    const blockZ = Math.round((yPct / 100) * MAP_SIZE);
+
+    coordDisplay.textContent = `X: ${blockX}, Z: ${blockZ}`;
+  });
+
+  mapViewport.addEventListener('mouseleave', () => {
+    coordDisplay.textContent = 'X: --, Z: --';
   });
 
   document.addEventListener('click', (e) => {
