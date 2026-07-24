@@ -86,6 +86,52 @@ text-align: left;
     background: #1f3b57;
   }
 
+  .info-panel .discord-btn {
+  display: inline-block;
+margin-top: 16px;
+  background: #5865F2;
+  color: #ffffff;
+  text-decoration: none;
+   font-weight: bold;
+  
+  font-size: 14px;
+  padding: 10px 16px;
+  border-radius: 6px;
+text-align: center;
+  width: 100%;
+}
+
+.info-panel .discord-btn:hover {
+  background: #4752c4;
+}
+
+.info-panel .contact-text {
+ margin-top: 16px;
+  font-size: 14px;
+  
+  color: #cccccc;
+  font-style: italic;
+}
+
+  .compass-label {
+  position: absolute;
+  
+  color: #ffffff;
+ 
+font-weight: bold;
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+text-shadow: 0 0 4px rgba(0,0,0,0.8), 0 0 8px rgba(0,0,0,0.6);
+  z-index: 3;
+  pointer-events: none;
+  user-select: none;
+}
+
+.compass-north { top: 8px;    left: 50%; transform: translateX(-50%); }
+.compass-south { bottom: 8px; left: 50%; transform: translateX(-50%); }
+.compass-east  { right: 8px;  top: 50%;  transform: translateY(-50%); }
+.compass-west  { left: 8px;   top: 50%;  transform: translateY(-50%); }
+
   .legend {
     display: flex;
  flex-wrap: wrap;
@@ -390,6 +436,10 @@ border-left: none;
 
 <div class="map-container">
   <div class="map-viewport" id="mapViewport">
+    <div class="compass-label compass-north">N</div>
+<div class="compass-label compass-south">S</div>
+<div class="compass-label compass-east">E</div>
+<div class="compass-label compass-west">W</div>
  <div class="map-inner" id="mapInner">
   <img src="map.png" alt="Minecraft Map" draggable="false">
     </div>
@@ -409,7 +459,9 @@ border-left: none;
   <div class="value" id="infoOwner"></div>
   <div class="label">Description</div>
   <div class="value" id="infoDescription"></div>
-  <img class="location-image" id="infoImage" alt="">
+<img class="location-image" id="infoImage" alt="">
+<a class="discord-btn" id="infoDiscordBtn" href="#" target="_blank" rel="noopener" style="display:none;">Join Discord</a>
+<div class="contact-text" id="infoContactText" style="display:none;"></div>
 </div>
 
 <div class="lightbox" id="lightbox">
@@ -466,6 +518,7 @@ border-left: none;
       y: 85.9,
       owner: 'X_Gamer_',
       description: '"Star Blessed, Bound by Destiny". The name Asterwyn means "Star Blessed" We believe the stars are more than distant lights in the night sky they are symbols of ambition, destiny, and greatness. Every banner we raise bears the stars as a reminder that our kingdom is meant to shine above the rest.',
+      discordInvite: 'https://discord.gg/rDhE23aKpa',
       image: 'asterwyn.jpg'
     }
   ];
@@ -564,11 +617,28 @@ border-left: none;
       infoImage.classList.remove('show');
     }
 
+    // <-- NEW: Discord invite / contact info
+    const discordBtn = document.getElementById('infoDiscordBtn');
+    const contactText = document.getElementById('infoContactText');
+
+    if (loc.discordInvite) {
+      discordBtn.href = loc.discordInvite;
+      discordBtn.style.display = 'block';
+      contactText.style.display = 'none';
+    } else if (loc.contact) {
+      contactText.textContent = 'Contact: ' + loc.contact;
+      contactText.style.display = 'block';
+      discordBtn.style.display = 'none';
+    } else {
+      discordBtn.style.display = 'none';
+      contactText.style.display = 'none';
+    }
+    // <-- END NEW
+
     infoPanel.classList.add('open');
     backdrop.classList.add('active');
     activeLocationId = id;
   }
-
   function closePanel() {
     infoPanel.classList.remove('open');
     backdrop.classList.remove('active');
