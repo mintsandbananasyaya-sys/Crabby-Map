@@ -414,26 +414,32 @@ font-size: 22px;
     line-height: 1;
   }
 
-  @media (max-width: 700px) {
-    .info-panel {
-     top: auto;
-      bottom: -100%;
-     right: 0;
-      left: 0;
-      width: 100%;
-     height: auto;
-      max-height: 55vh;
-border-left: none;
-      border-top: 2px solid #ffffff;
-      border-radius: 12px 12px 0 0;
-      transition: bottom 0.4s ease;
-    }
+ @media (max-width: 700px) {
+  .info-panel {
+    top: auto;
+    bottom: -100%;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    max-height: 42vh;
+    border-left: none;
+    border-top: 2px solid #ffffff;
+    border-radius: 12px 12px 0 0;
+    transition: bottom 0.4s ease;
+  }
+
+  .info-panel.open {
+    bottom: 0;
+    right: 0;
+  }
+}
 
     .info-panel.open {
       bottom: 0;
      right: 0;
     }
-  }
+  
 </style>
 </head>
 <body>
@@ -1128,7 +1134,6 @@ territoryColor: '#c9a227'
       owner: 'OrcaForever',
       description: 'A smarter nation for the competent. We are here to make actual new lore and dedicate ourselves to a cause to survive instead of messing about. We can have fun while doing it, but that doesnt mean we have to kill. We will be fair to all citizens, trading should be done safely, and we will designate crews based on skills.',
       discordInvite: 'https://discord.gg/CdhhrPPPYz',
-      image: 'orca.jpg',
       territory: [
   { x: 47.7, y: 51.8 },
   { x: 47.7, y: 51.8 },
@@ -1674,14 +1679,16 @@ function applyCategoryFilter() {
     }
 
     const loc = LOCATIONS.find(l => l.id === id);
-    if (!loc) return;
+if (!loc) return;
 
-    currentZoom = 2.2;
-    baseOffsetX = (50 - loc.x);
-    baseOffsetY = (50 - loc.y);
-    panX = 0;
-    panY = 0;
-    updateTransform();
+const isMobile = window.innerWidth <= 700;
+currentZoom = isMobile ? 1.7 : 2.2;
+const verticalTarget = isMobile ? 28 : 50;
+baseOffsetX = (50 - loc.x);
+baseOffsetY = (verticalTarget - loc.y);
+panX = 0;
+panY = 0;
+updateTransform();
 
     const cat = CATEGORIES[loc.type];
     document.getElementById('infoSwatch').style.background = cat.color;
