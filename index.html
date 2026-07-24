@@ -819,22 +819,22 @@ y: 38.8,
     searchDropdown.classList.add('show');
   });
 
-  const MAP_SIZE = 4000;
-  const coordDisplay = document.getElementById('coordDisplay');
-  const mapImg = mapInner.querySelector('img');
+  const MAP_SIZE = 4096;
+const coordDisplay = document.getElementById('coordDisplay');
+const mapImg = mapInner.querySelector('img');
 
-  mapViewport.addEventListener('mousemove', (e) => {
-    const rect = mapImg.getBoundingClientRect();
-    const xPct = ((e.clientX - rect.left) / rect.width) * 100;
-    const yPct = ((e.clientY - rect.top) / rect.height) * 100;
+mapViewport.addEventListener('mousemove', (e) => {
+  const rect = mapImg.getBoundingClientRect();
+  const xPct = ((e.clientX - rect.left) / rect.width) * 100;
+  const yPct = ((e.clientY - rect.top) / rect.height) * 100;
 
-    if (xPct < 0 || xPct > 100 || yPct < 0 || yPct > 100) return;
+  if (xPct < 0 || xPct > 100 || yPct < 0 || yPct > 100) return;
 
-    const blockX = Math.round((xPct / 100) * MAP_SIZE);
-    const blockZ = Math.round((yPct / 100) * MAP_SIZE);
+  const blockX = Math.round((xPct / 100) * MAP_SIZE - MAP_SIZE / 2);
+  const blockZ = Math.round((yPct / 100) * MAP_SIZE - MAP_SIZE / 2);
 
-    coordDisplay.textContent = `X: ${blockX}, Z: ${blockZ}`;
-  });
+  coordDisplay.textContent = `X: ${blockX}, Z: ${blockZ}`;
+});
 
   mapViewport.addEventListener('mouseleave', () => {
     coordDisplay.textContent = 'X: --, Z: --';
